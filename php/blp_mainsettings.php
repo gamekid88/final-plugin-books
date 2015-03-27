@@ -120,15 +120,15 @@ function blp_load_book()
         
 	?><h2><?php _e('Quotes and their Authors','my-plugin');?></h2>
 	<table class="widefat">
-            <thread>
+            <thead>
                 <tr>
                     <th><?php _e('Book Name','my-plugin'); ?></th>
                     <th><?php _e('Author','my-plugin'); ?></th>
-<                   <th><?php _e('Summary','my-plugin'); ?></th>
+                   <th><?php _e('Summary','my-plugin'); ?></th>
                     <th><?php _e('Thoughts','my-plugin'); ?></th>
                     
                 </tr>
-            </thread>
+            </thead>
 	<?php 
 	 if( $eric_book_array->have_posts() )
             {
