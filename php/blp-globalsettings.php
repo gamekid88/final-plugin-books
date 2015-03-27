@@ -68,7 +68,7 @@ function author_title_shortcode_func()
 	{
 		$settings = (array) get_option( 'blp-settings' );
 		$author_shortcode_title = '';
-		if (isset($settings['authpr_shortcode_title']))
+		if (isset($settings['author_shortcode_title']))
 		{
 			$author_shortcode_title = esc_attr( $settings['author_shortcode_title'] );
 		}
