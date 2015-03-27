@@ -8,13 +8,11 @@ if ( ! defined( 'ABSPATH' ) ) exit;
  */
  
 /**
-  * This is the shortcode that displays all of the quotes and authors that the admin has entered.
+  * This is the shortcode that displays all of the book, author, and all attributes that the admin has entered.
   *
-  * @param array $atts Used to pass the results back to the website
-  * @return $short_display_quote 
-  * @since 2.0
+  * @param array $atts Used to pass the results back to the website 
+  * @since 1.0
   */
-
 
 function show_all_books($atts)
 {
@@ -47,7 +45,12 @@ function show_all_books($atts)
 
 }
 
-
+/**
+  * This the function that displays all the books by a certain author determined by the admin. 
+  *
+  *
+  * @since 1.0
+  */
 function show_by_author ($atts)
 {
     $settings = (array) get_option( 'blp-settings' );
@@ -93,13 +96,7 @@ function show_by_author ($atts)
     
                 }
 
-            }
-
-
-    
-    
-    
-    
+            }    
     
 }
 

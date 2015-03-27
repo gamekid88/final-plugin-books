@@ -7,8 +7,34 @@ if ( ! defined( 'ABSPATH' ) ) exit;
  * @since       1.0
  */
 
-
-function insert_book ()
+function blp_book_logging_system()
+{
+    if ( current_user_can('moderate_comments') )
+	{
+		?>
+		<link type="text/css" href="http://ajax.googleapis.com/ajax/libs/jqueryui/1.10.3/themes/redmond/jquery-ui.css" rel="stylesheet" />
+		<?php
+		wp_enqueue_script( 'jquery' );
+		wp_enqueue_script( 'jquery-ui-core' );
+		wp_enqueue_script( 'jquery-ui-dialog' );
+		wp_enqueue_script( 'jquery-ui-button' );
+		wp_enqueue_script('eric_plugin_script', plugins_url( '../javascript/blp-main-js.js', __FILE__ ));
+                blp_insert_book();
+                blp_edit_book();
+                blp_delete_book();
+                blp_load_book();
+    
+        }
+        
+}
+/**
+  * This function will take the form values from the form and put them into a post to display
+  *to the user. 
+  * Inserts into the post system.
+  *
+  * @since 1.0
+  */
+function blp_insert_book ()
 {
     if(isset($_POST['saved-book-name']) AND (wp_verify_nonce( $_POST['nonce_field'], 'nonce_check')))	
     {
@@ -31,8 +57,13 @@ function insert_book ()
 
 }
 
-
-function delete_book ()
+/**
+  * This the function removes a post from the list of books
+  *
+  *
+  * @since 1.0
+  */
+function blp_delete_book ()
 {
    if(isset($_POST['delete_book_id']) && wp_verify_nonce( $_POST['nonce_field'], 'nonce_check')) 
 	{
@@ -40,8 +71,14 @@ function delete_book ()
             wp_delete_post( $deleted_book_id, true );
     
         }
-    
-function edit_book ()
+}        
+ /**
+  * This the function allows the posts to be editted and then redisplayed for the user. 
+  *
+  *
+  * @since 2.0
+  */   
+function blp_edit_book ()
 {
     if(isset($_POST['hid_edit_book_id']) && wp_verify_nonce( $_POST['nonce_field'], 'nonce_check')) 
         {   
@@ -68,7 +105,15 @@ function edit_book ()
     
 }
 
-function load_book()
+/**
+  * This the function allows the list to be generated in the post system. It takes the post and loads
+  * the list of books and displays it for the user. This function also displays the edit box for the edit 
+  * and the form to enter a new book
+  * 
+  *
+  * @since 1.0
+  */
+function blp_load_book()
 {
 	
 	$eric_book_array = new WP_Query( array('post_type' => 'book', 'posts_per_page' => -1) );
@@ -77,10 +122,10 @@ function load_book()
 	<table class="widefat">
             <thread>
                 <tr>
-                    <th><?php _e('Book Name','book-logging-plugin'); ?></th>
-                    <th><?php _e('Author','book-logging-plugin'); ?></th>
-<                   <th><?php _e('Summary','book-logging-plugin'); ?></th>
-                    <th><?php _e('Thoughts','book-logging-plugin'); ?></th>
+                    <th><?php _e('Book Name','my-plugin'); ?></th>
+                    <th><?php _e('Author','my-plugin'); ?></th>
+<                   <th><?php _e('Summary','my-plugin'); ?></th>
+                    <th><?php _e('Thoughts','my-plugin'); ?></th>
                     
                 </tr>
             </thread>
@@ -124,14 +169,15 @@ function load_book()
 			</div> 
 		</tr>
 		<?php
-	} 
+            } 
+       }
 	?> 
          <tfoot>
             <tr>
-            <th><?php _e('Book Name','testmonial-master'); ?></th>
-            <th><?php _e('Author','testmonial-master'); ?></th>
-            <th><?php _e('Summary','testmonial-master'); ?></th>
-            <th><?php _e('Thoughts','testmonial-master'); ?></th>
+            <th><?php _e('Book Name','my-plugin'); ?></th>
+            <th><?php _e('Author','my-plugin'); ?></th>
+            <th><?php _e('Summary','my-plugin'); ?></th>
+            <th><?php _e('Thoughts','my-plugin'); ?></th>
             </tr>
         </tfoot>
 	</table>

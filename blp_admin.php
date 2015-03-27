@@ -17,6 +17,14 @@ if ( ! defined( 'ABSPATH' ) ) exit;
 
 add_action('admin_menu', 'book_panel');
 add_action('init', 'custom_post');
+add_action('widgets_init', create_function('', 'return register_widget("BLP_Book_Widget");'));
+include "php/blp-shortcode.php";
+include "php/blp_mainsettings.php";
+include "php/blp-globalsettings.php";
+include 'php/blp-widget.php';
+add_shortcode('full_book_list', 'show_all_books');
+add_shortcode('group_by_author', 'show_by_author');
+
 
 
 /**
@@ -24,16 +32,16 @@ add_action('init', 'custom_post');
   *
   * @since 1.0
 */
-function book_panel()
+function blp_book_panel()
 {
 	if (function_exists('add_menu_page'))
 	{
-		add_menu_page('Erics Book Logging System', 'Erics Book Logging System', 'moderate_comments', __FILE__, 'book_logging_system');
-	}
+		add_menu_page('Erics Book Logging System', 'Erics Book Logging System', 'moderate_comments', __FILE__, 'blp_book_logging_system');
+                add_submenu_page(__FILE__, __('Global Settings', 'my-plugin'), __('Global Settings', 'my-plugin'), 'moderate_comments', 'blp_global_settings', 'blp_generate_settings_page');
+        }
+
 }
-
-
-function custom_post ()
+function blp_custom_post ()
 {
     $labels = array(
 		'name'               => 'Books',
