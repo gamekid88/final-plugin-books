@@ -44,8 +44,9 @@ function blp_insert_book ()
 	$thoughts = sanitize_text_field($_POST['saved-thoughts']);
         
         $my_post = array(
-         post_title => $book_name,
-         post_status => 'publish'
+         'post_title' => $book_name,
+         'post_status' => 'publish',
+         'post_type' => 'book'
          );
         
         $post_id = wp_insert_post( $my_post );
@@ -65,7 +66,7 @@ function blp_insert_book ()
   */
 function blp_delete_book ()
 {
-   if(isset($_POST['delete_book_id']) && wp_verify_nonce( $_POST['nonce_field'], 'nonce_check')) 
+   if(isset($_POST['delete_book_id']) && wp_verify_nonce( $_POST['delete_nonce_field'], 'delete_nonce_check')) 
 	{
             $deleted_book_id = intval($_POST["delete_book_id"]);
             wp_delete_post( $deleted_book_id, true );
@@ -80,13 +81,13 @@ function blp_delete_book ()
   */   
 function blp_edit_book ()
 {
-    if(isset($_POST['hid_edit_book_id']) && wp_verify_nonce( $_POST['nonce_field'], 'nonce_check')) 
+    if(isset($_POST['hid_edit_book_id']) && wp_verify_nonce( $_POST['edit_nonce_field'], 'edit_nonce_check')) 
         {   
             $hid_edit_book_id = intval($_POST["hid_edit_book_id"]);
-            $edit_book_name = sanatize_text_field(($_POST["edit-book-name"]));
-            $edit_author_name = sanatize_text_field(($_POST["edit-author-name"]));
-            $edit_summary = sanatize_text_field(($_POST["edit-summary-name"]));
-            $edit_thoughts = sanatize_text_field(($_POST["edit-thoughts-name"]));
+            $edit_book_name = sanitize_text_field(($_POST["edit-book-name"]));
+            $edit_author_name = sanitize_text_field(($_POST["edit-author-name"]));
+            $edit_summary = sanitize_text_field(($_POST["edit-summary"]));
+            $edit_thoughts = sanitize_text_field(($_POST["edit-thoughts"]));
             
             $my_post = array(
                 'ID' => $hid_edit_book_id,
@@ -120,15 +121,17 @@ function blp_load_book()
         
 	?><h2><?php _e('Quotes and their Authors','my-plugin');?></h2>
 	<table class="widefat">
-            <thread>
+            <thead>
                 <tr>
+                <th>&nbsp;</th>
+                <th>&nbsp;</th>
                     <th><?php _e('Book Name','my-plugin'); ?></th>
                     <th><?php _e('Author','my-plugin'); ?></th>
-<                   <th><?php _e('Summary','my-plugin'); ?></th>
+                   <th><?php _e('Summary','my-plugin'); ?></th>
                     <th><?php _e('Thoughts','my-plugin'); ?></th>
                     
                 </tr>
-            </thread>
+            </thead>
 	<?php 
 	 if( $eric_book_array->have_posts() )
             {
@@ -148,23 +151,24 @@ function blp_load_book()
 				<form action="" method="post"><input type="hidden" name="delete_quote" value="confirmation" />
 					<input type="hidden" name="delete_book_id" value="<?php echo esc_attr(get_the_ID()); ?>" />
 					<input type="submit" value= <?php _e('Delete','my-plugin');?> />
-					<?php wp_nonce_field('nonce_check','nonce_field'); ?>
+					<?php wp_nonce_field('delete_nonce_check','delete_nonce_field'); ?>
 				</form>
 			</td>
-			<td><button onclick="show_popup(<?php echo $value["quote_id"]; ?>);">Edit</button></td>
+			<td><button onclick="show_popup(<?php echo get_the_ID(); ?>);">Edit</button></td>
 			<td><?php echo esc_html($title); ?></td>
 			<td><?php echo esc_html($author); ?></td>
                         <td><?php echo esc_html($summary); ?></td>
                         <td><?php echo esc_html($thoughts); ?></td>
                         
-			<div style =" display:none;" id="dialog<?php echo$value["quote_id"]; ?>" title=<?php _e('Edit Book','my-plugin');?>>
+			<div style =" display:none;" id="dialog<?php echo get_the_ID(); ?>" title=<?php _e('Edit Book','my-plugin');?>>
 				<form action="" method="post"><input type="hidden" name="hid_edit_quote" value="confirmation" />
 					<input type="hidden" name="hid_edit_book_id" value="<?php echo esc_attr(get_the_ID()); ?>" />
 					<?php _e('Please edit the book name:','my-plugin')?> <input type= "text" name="edit-book-name" value= "<?php echo $title; ?>" ><br />   
 					<?php _e('Please edit the author:','my-plugin')?> <input type= "text" name="edit-author-name" value="<?php echo $author;?>"><br />
                                         <?php _e('Please edit the summary:','my-plugin')?> <textarea name="edit-summary"> <?php echo esc_textarea($summary);?></textarea><br />
                                         <?php _e('Please edit the thoughts:','my-plugin')?> <textarea name="edit-thoughts"> <?php echo esc_textarea($thoughts);?></textarea><br />
-					<input type="submit" name="submit_edit" value=<?php _e('Submit Edit','my-plugin');?>
+					<input type="submit" name="submit_edit" value=<?php _e('Submit Edit','my-plugin');?> />
+					<?php wp_nonce_field('edit_nonce_check','edit_nonce_field'); ?>
 				</form>
 			</div> 
 		</tr>
@@ -174,6 +178,8 @@ function blp_load_book()
 	?> 
          <tfoot>
             <tr>
+            <th>&nbsp;</th>
+            <th>&nbsp;</th>
             <th><?php _e('Book Name','my-plugin'); ?></th>
             <th><?php _e('Author','my-plugin'); ?></th>
             <th><?php _e('Summary','my-plugin'); ?></th>
