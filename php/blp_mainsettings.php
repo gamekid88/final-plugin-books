@@ -44,8 +44,8 @@ function blp_insert_book ()
 	$thoughts = sanitize_text_field($_POST['saved-thoughts']);
         
         $my_post = array(
-         post_title => $book_name,
-         post_status => 'publish'
+         'post_title' => $book_name,
+         'post_status' => 'publish'
          );
         
         $post_id = wp_insert_post( $my_post );
