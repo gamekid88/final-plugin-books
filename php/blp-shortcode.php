@@ -16,8 +16,9 @@ if ( ! defined( 'ABSPATH' ) ) exit;
 
 function show_all_books($atts)
 {
+    $display = '';
     $settings = (array) get_option( 'blp-settings' );
-    echo esc_html($settings['main_shortcode_title']);
+    $display .= esc_html($settings['main_shortcode_title']);
     
     $eric_book_array = new WP_Query( array('post_type' => 'book', 'posts_per_page' => -1) );
 
@@ -32,16 +33,16 @@ function show_all_books($atts)
                     $summary = get_post_meta( get_the_ID(), 'summary', true );
                     $thoughts = get_post_meta( get_the_ID(), 'thoughts', true );
                
-                    echo "<h2>$title</h2>"; 
-                    echo "<p> $author</p>";
-                    echo "<p> $summary</p>";
-                    echo "<p> $thoughts</p><br />";    
+                    $display .= "<h2>$title</h2>"; 
+                    $display .= "<p> $author</p>";
+                    $display .= "<p> $summary</p>";
+                    $display .= "<p> $thoughts</p><br />";    
     
     
                 }
 
             }
-
+return $display;
 
 }
 
@@ -53,8 +54,9 @@ function show_all_books($atts)
   */
 function show_by_author ($atts)
 {
+	$display = '';
     $settings = (array) get_option( 'blp-settings' );
-    echo esc_html($settings['author_shortcode_title']);
+    $display .= esc_html($settings['author_shortcode_title']);
     
     extract(shortcode_atts(array(
      'author' => '0'
@@ -88,16 +90,16 @@ function show_by_author ($atts)
                     $summary = get_post_meta( get_the_ID(), 'summary', true );
                     $thoughts = get_post_meta( get_the_ID(), 'thoughts', true );
                
-                    echo "<h2>$title</h2>"; 
-                    echo "<p> $author</p>";
-                    echo "<p> $summary</p>";
-                    echo "<p> $thoughts</p><br />";    
+                    $display .= "<h2>$title</h2>"; 
+                    $display .= "<p> $author</p>";
+                    $display .= "<p> $summary</p>";
+                    $display .= "<p> $thoughts</p><br />";    
     
     
                 }
 
             }    
-    
+    return $display;
 }
 
 
