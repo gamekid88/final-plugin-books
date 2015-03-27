@@ -66,7 +66,7 @@ function blp_insert_book ()
   */
 function blp_delete_book ()
 {
-   if(isset($_POST['delete_book_id']) && wp_verify_nonce( $_POST['nonce_field'], 'nonce_check')) 
+   if(isset($_POST['delete_book_id']) && wp_verify_nonce( $_POST['delete_nonce_field'], 'delete_nonce_check')) 
 	{
             $deleted_book_id = intval($_POST["delete_book_id"]);
             wp_delete_post( $deleted_book_id, true );
@@ -151,7 +151,7 @@ function blp_load_book()
 				<form action="" method="post"><input type="hidden" name="delete_quote" value="confirmation" />
 					<input type="hidden" name="delete_book_id" value="<?php echo esc_attr(get_the_ID()); ?>" />
 					<input type="submit" value= <?php _e('Delete','my-plugin');?> />
-					<?php wp_nonce_field('nonce_check','nonce_field'); ?>
+					<?php wp_nonce_field('delete_nonce_check','delete_nonce_field'); ?>
 				</form>
 			</td>
 			<td><button onclick="show_popup(<?php echo $value["quote_id"]; ?>);">Edit</button></td>
