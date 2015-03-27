@@ -45,7 +45,8 @@ function blp_insert_book ()
         
         $my_post = array(
          'post_title' => $book_name,
-         'post_status' => 'publish'
+         'post_status' => 'publish',
+         'post_type' => 'book'
          );
         
         $post_id = wp_insert_post( $my_post );
