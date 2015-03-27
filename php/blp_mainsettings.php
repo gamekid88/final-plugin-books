@@ -123,6 +123,8 @@ function blp_load_book()
 	<table class="widefat">
             <thead>
                 <tr>
+                <th>&nbsp;</th>
+                <th>&nbsp;</th>
                     <th><?php _e('Book Name','my-plugin'); ?></th>
                     <th><?php _e('Author','my-plugin'); ?></th>
                    <th><?php _e('Summary','my-plugin'); ?></th>
@@ -175,6 +177,8 @@ function blp_load_book()
 	?> 
          <tfoot>
             <tr>
+            <th>&nbsp;</th>
+            <th>&nbsp;</th>
             <th><?php _e('Book Name','my-plugin'); ?></th>
             <th><?php _e('Author','my-plugin'); ?></th>
             <th><?php _e('Summary','my-plugin'); ?></th>
