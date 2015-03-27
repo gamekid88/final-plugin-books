@@ -15,8 +15,8 @@ if ( ! defined( 'ABSPATH' ) ) exit;
 * @version 1.0
 */
 
-add_action('admin_menu', 'book_panel');
-add_action('init', 'custom_post');
+add_action('admin_menu', 'blp_book_panel');
+add_action('init', 'blp_custom_post');
 add_action('widgets_init', create_function('', 'return register_widget("BLP_Book_Widget");'));
 include "php/blp-shortcode.php";
 include "php/blp_mainsettings.php";
