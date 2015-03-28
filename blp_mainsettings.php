@@ -79,7 +79,7 @@ function load_book()
                 <tr>
                     <th><?php _e('Book Name','book-logging-plugin'); ?></th>
                     <th><?php _e('Author','book-logging-plugin'); ?></th>
-<                   <th><?php _e('Summary','book-logging-plugin'); ?></th>
+                   <th><?php _e('Summary','book-logging-plugin'); ?></th>
                     <th><?php _e('Thoughts','book-logging-plugin'); ?></th>
                     
                 </tr>
@@ -124,7 +124,7 @@ function load_book()
 			</div> 
 		</tr>
 		<?php
-	} 
+                } 
 	?> 
          <tfoot>
             <tr>
@@ -145,10 +145,8 @@ function load_book()
 		<?php wp_nonce_field('nonce_check','nonce_field'); ?>
 	</form>
 	<?php 
+        
+            }
 }// end function load_quote
-
-
-
-
 
 ?>
