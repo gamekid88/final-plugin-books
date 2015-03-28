@@ -7,16 +7,17 @@ if ( ! defined( 'ABSPATH' ) ) exit;
  * @since       1.0
  */
  
+
+
+
 /**
-  * This is the shortcode that displays all of the quotes and authors that the admin has entered.
+  * This is the function that sets up the settings page. It registers the settings. 
+  * It also adds two text boxes. 
   *
-  * @param array $atts Used to pass the results back to the website
-  * @return $short_display_quote 
+  * 
+  *
   * @since 2.0
   */
-
-
-
 function blp_init()
 {
 register_setting( 'blp-settings-group', 'blp-settings' );
@@ -27,11 +28,24 @@ add_settings_field( 'author-text', 'Text displays above the author shortcode.', 
 
 add_action('admin_init','blp_init');
 
+
+/**
+  * This the function that runs first on the page and echos out a statement.
+  *
+  * 
+  * @since 1.0
+  */
 function my_global_section()
 	{
-		echo 'These text areas are created at the top of the shortcode lists.';
+		_e('These text areas are created at the top of the shortcode lists.','my-plugin'); 
 	}
 
+        
+  /**
+  * This the function that sets up the shortcode function for the main title in list of books.
+  *
+  * @since 1.0
+  */
 function main_title_shortcode_func()
 	{
 		$settings = (array) get_option( 'blp-settings' );
@@ -43,12 +57,18 @@ function main_title_shortcode_func()
 		echo "<input type='text' name='blp-settings[main_shortcode_title]' id='blp-settings[main_shortcode_title]' value='$main_shortcode_title' />";
                
 	}
-        
- function author_title_shortcode_func()
+ 
+        /**
+  * This the function that sets up the author title in the book list.
+  *
+  *
+  * @since 1.0
+  */
+function author_title_shortcode_func()
 	{
 		$settings = (array) get_option( 'blp-settings' );
 		$author_shortcode_title = '';
-		if (isset($settings['authpr_shortcode_title']))
+		if (isset($settings['author_shortcode_title']))
 		{
 			$author_shortcode_title = esc_attr( $settings['author_shortcode_title'] );
 		}
@@ -57,7 +77,12 @@ function main_title_shortcode_func()
 	}       
 
 
-function generate_settings_page()
+        /**
+  * This the function that generates the settings page for the admin.
+  *
+  * @since 2.0
+  */
+function blp_generate_settings_page()
 	{
 		?>
 	<div class="wrap">

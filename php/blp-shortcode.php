@@ -8,18 +8,17 @@ if ( ! defined( 'ABSPATH' ) ) exit;
  */
  
 /**
-  * This is the shortcode that displays all of the quotes and authors that the admin has entered.
+  * This is the shortcode that displays all of the book, author, and all attributes that the admin has entered.
   *
-  * @param array $atts Used to pass the results back to the website
-  * @return $short_display_quote 
-  * @since 2.0
+  * @param array $atts Used to pass the results back to the website 
+  * @since 1.0
   */
-
 
 function show_all_books($atts)
 {
+    $display = '';
     $settings = (array) get_option( 'blp-settings' );
-    echo esc_html($settings['main_shortcode_title']);
+    $display .= esc_html($settings['main_shortcode_title']);
     
     $eric_book_array = new WP_Query( array('post_type' => 'book', 'posts_per_page' => -1) );
 
@@ -34,24 +33,30 @@ function show_all_books($atts)
                     $summary = get_post_meta( get_the_ID(), 'summary', true );
                     $thoughts = get_post_meta( get_the_ID(), 'thoughts', true );
                
-                    echo "<h2>$title</h2>"; 
-                    echo "<p> $author</p>";
-                    echo "<p> $summary</p>";
-                    echo "<p> $thoughts</p><br />";    
+                    $display .= "<h2>$title</h2>"; 
+                    $display .= "<p> $author</p>";
+                    $display .= "<p> $summary</p>";
+                    $display .= "<p> $thoughts</p><br />";    
     
     
                 }
 
             }
-
+return $display;
 
 }
 
-
+/**
+  * This the function that displays all the books by a certain author determined by the admin. 
+  *
+  *
+  * @since 1.0
+  */
 function show_by_author ($atts)
 {
+	$display = '';
     $settings = (array) get_option( 'blp-settings' );
-    echo esc_html($settings['author_shortcode_title']);
+    $display .= esc_html($settings['author_shortcode_title']);
     
     extract(shortcode_atts(array(
      'author' => '0'
@@ -85,22 +90,16 @@ function show_by_author ($atts)
                     $summary = get_post_meta( get_the_ID(), 'summary', true );
                     $thoughts = get_post_meta( get_the_ID(), 'thoughts', true );
                
-                    echo "<h2>$title</h2>"; 
-                    echo "<p> $author</p>";
-                    echo "<p> $summary</p>";
-                    echo "<p> $thoughts</p><br />";    
+                    $display .= "<h2>$title</h2>"; 
+                    $display .= "<p> $author</p>";
+                    $display .= "<p> $summary</p>";
+                    $display .= "<p> $thoughts</p><br />";    
     
     
                 }
 
-            }
-
-
-    
-    
-    
-    
-    
+            }    
+    return $display;
 }
 
 

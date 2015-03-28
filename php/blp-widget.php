@@ -8,20 +8,31 @@ if ( ! defined( 'ABSPATH' ) ) exit;
  */
  
 /**
-  * This is the shortcode that displays all of the quotes and authors that the admin has entered.
+  * This is the class the creates the widget within the wordpress system.
   *
-  * @param array $atts Used to pass the results back to the website
-  * @return $short_display_quote 
-  * @since 2.0
+  * 
+  * @since 1.0
   */
 
 class BLP_Book_Widget extends WP_Widget
 {
+    /**
+  * This the function the creates the constructor for the widget. 
+  *
+  *
+  * @since 1.0
+  */
       function __construct() {
 		parent::__construct( 'tm_random_widget', 'Testimonial Master Random Widget' );
 	}
 
-function form( $instance ) {
+  /**
+  * This the function that creates the title for the widget.
+  *
+  *
+  * @since 1.0
+  */
+      function form( $instance ) {
 		$defaults = array(
 			'title'            => ''
 		);
@@ -34,13 +45,26 @@ function form( $instance ) {
 		<?php
 	}
 
-function update( $new_instance, $old_instance ) {
+        
+        /**
+  * This the function that updates the widget.
+  *
+  *
+  * @since 1.0
+  */
+      function update( $new_instance, $old_instance ) {
 		$instance = $old_instance;
 		$instance['title']            = strip_tags( $new_instance['title'] );
 		return $instance;
 	}
 
-function widget( $args, $instance ) {
+        /**
+  * This is that displays the titles and authors in the widget.
+  *
+  *
+  * @since 1.0
+  */
+       function widget( $args, $instance ) {
 		$args['id']        = ( isset( $args['id'] ) ) ? $args['id'] : 'edd_cart_widget';
 		$instance['title'] = ( isset( $instance['title'] ) ) ? $instance['title'] : '';
 		$title = apply_filters( 'widget_title', $instance[ 'title' ], $instance, $args['id'] );
@@ -57,9 +81,7 @@ function widget( $args, $instance ) {
                     $eric_book_array->the_post();
                     $title = get_the_title();
                     
-                    echo "<p>$title</p>";
- 
-                
+                    echo "<p>$title</p>";                
                 
                     }
                 
